@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nirmal Innovations | Admin Dashboard</title>
+  <meta name="description"
+    content="Sleek, modern admin dashboard for Nirmal Innovations VM stations, machines, products, and customer management.">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+              950: '#022c22',
+            },
+            teal: {
+              50: '#f0fdfa',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body
+  class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-300 relative overflow-x-hidden">
+
+  <!-- Background Ambient Glow Blobs -->
+  <div class="glow-blob glow-emerald w-96 h-96 -top-20 -left-20"></div>
+  <div class="glow-blob glow-teal w-96 h-96 top-1/3 -right-20"></div>
+
+  <!-- MAIN APP WRAPPER -->
+  <div class="flex-1 flex overflow-hidden relative z-10">
+
+    <!-- ========================================================================= -->
+    <!-- DESKTOP COLLAPSIBLE SIDEBAR (Left) -->
+    <!-- ========================================================================= -->
+    <aside id="main-sidebar"
+      class="hidden md:flex flex-col w-64 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-r border-slate-200/80 dark:border-slate-800/80 sidebar-transition z-30 relative select-none">
+
+      <!-- Brand Logo Header -->
+      <div class="h-20 flex items-center justify-between px-5 border-b border-slate-200/60 dark:border-slate-800/60">
+        <a href="#dashboard" class="flex items-center space-x-3 group">
+          <div
+            class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 via-emerald-500 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/25 group-hover:scale-105 transition-transform duration-300">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div id="brand-title-wrapper" class="flex flex-col">
+            <span id="brand-title"
+              class="font-extrabold text-base tracking-tight bg-gradient-to-r from-emerald-700 via-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-300 bg-clip-text text-transparent">
+              Nirmal Innovations
+            </span>
+            <span id="brand-subtitle"
+              class="text-[11px] font-semibold tracking-wider uppercase text-slate-400 dark:text-slate-500">
+              Admin Portal
+            </span>
+          </div>
+        </a>
+
+        <!-- Collapse Button -->
+        <button id="collapse-desktop-sidebar-btn" aria-label="Toggle Desktop Sidebar"
+          class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+          <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="flex-1 px-3 py-6 space-y-1.5 overflow-y-auto">
+
+        <!-- 1. Dashboard -->
+        <a href="/dashboard"
+          class="nav-link flex items-center px-3.5 py-3 rounded-xl font-medium text-sm transition-all group">
+          <svg class="w-5 h-5 mr-3 text-emerald-500 group-hover:scale-110 transition-transform" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+          </svg>
+          <span class="sidebar-label font-semibold">Dashboard</span>
+        </a>
+
+        <!-- 2. Power / Machines (VM Stations) -->
+        <a href="/machines"
+          class="nav-link flex items-center px-3.5 py-3 rounded-xl font-medium text-sm transition-all group">
+          <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-emerald-500 group-hover:scale-110 transition-all"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <span class="sidebar-label">Power / Machines</span>
+          <span id="station-count-badge"
+            class="sidebar-label ml-auto px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">7</span>
+        </a>
+
+        <!-- 3. Customers -->
+        <a href="/customers"
+          class="nav-link flex items-center px-3.5 py-3 rounded-xl font-medium text-sm transition-all group">
+          <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-emerald-500 group-hover:scale-110 transition-all"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <span class="sidebar-label">Customers</span>
+          <span id="customer-count-badge"
+            class="sidebar-label ml-auto px-2 py-0.5 text-xs font-semibold rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">10</span>
+        </a>
+
+        <!-- 4. Products -->
+        <a href="/products"
+          class="nav-link flex items-center px-3.5 py-3 rounded-xl font-medium text-sm transition-all group">
+          <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-emerald-500 group-hover:scale-110 transition-all"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+          </svg>
+          <span class="sidebar-label">Products</span>
+          <span id="product-count-badge"
+            class="sidebar-label ml-auto px-2 py-0.5 text-xs font-semibold rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">10</span>
+        </a>
+
+        <!-- 5. Reports -->
+        <a href="/reports"
+          class="nav-link flex items-center px-3.5 py-3 rounded-xl font-medium text-sm transition-all group">
+          <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-emerald-500 group-hover:scale-110 transition-all"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span class="sidebar-label">Reports</span>
+        </a>
+
+        <!-- 6. Billing -->
+        <a href="/billing"
+          class="nav-link flex items-center px-3.5 py-3 rounded-xl font-medium text-sm transition-all group">
+          <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-emerald-500 group-hover:scale-110 transition-all"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+          <span class="sidebar-label">Billing & Top-ups</span>
+        </a>
+
+        <!-- 7. Settings -->
+        <a href="/settings"
+          class="nav-link flex items-center px-3.5 py-3 rounded-xl font-medium text-sm transition-all group">
+          <svg class="w-5 h-5 mr-3 text-slate-400 group-hover:text-emerald-500 group-hover:scale-110 transition-all"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span class="sidebar-label">Settings</span>
+        </a>
+
+      </nav>
+
+      <!-- Sidebar Status Widget -->
+      <div class="p-4 border-t border-slate-200/60 dark:border-slate-800/60">
+        <div
+          class="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 rounded-xl p-3 border border-emerald-200/50 dark:border-emerald-800/40 flex items-center space-x-3">
+          <div class="relative flex-shrink-0">
+            <span class="w-3 h-3 rounded-full bg-emerald-500 block"></span>
+            <span class="w-3 h-3 rounded-full bg-emerald-400 block absolute top-0 left-0 animate-ping"></span>
+          </div>
+          <div class="sidebar-label min-w-0 flex-1">
+            <p class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">System Operational</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate">13 Connected Machines</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+
+    <!-- ========================================================================= -->
+    <!-- MOBILE DRAWER SIDEBAR -->
+    <!-- ========================================================================= -->
+    <div id="mobile-drawer" class="fixed inset-0 z-50 hidden md:hidden">
+      <div id="drawer-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm opacity-0 drawer-overlay"></div>
+      <div id="drawer-content"
+        class="fixed top-0 bottom-0 left-0 w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col -translate-x-full drawer-content">
+        <div class="h-20 flex items-center justify-between px-5 border-b border-slate-200 dark:border-slate-800">
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white font-bold shadow-md">
+              N
+            </div>
+            <span class="font-extrabold text-slate-900 dark:text-white">Nirmal Admin</span>
+          </div>
+          <button id="close-drawer-btn"
+            class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+          <a href="#dashboard"
+            class="flex items-center px-4 py-3 rounded-xl font-semibold text-sm bg-emerald-600 text-white shadow-lg">Dashboard</a>
+          <a href="#machines"
+            class="flex items-center px-4 py-3 rounded-xl font-medium text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Power
+            / Machines</a>
+          <a href="#customers"
+            class="flex items-center px-4 py-3 rounded-xl font-medium text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Customers</a>
+          <a href="#products"
+            class="flex items-center px-4 py-3 rounded-xl font-medium text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Products</a>
+          <a href="#reports"
+            class="flex items-center px-4 py-3 rounded-xl font-medium text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Reports</a>
+          <a href="#billing"
+            class="flex items-center px-4 py-3 rounded-xl font-medium text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Billing
+            & Top-ups</a>
+          <a href="#settings"
+            class="flex items-center px-4 py-3 rounded-xl font-medium text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Settings</a>
+        </nav>
+
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+          <button
+            class="open-balance-modal-btn w-full btn-emerald-gradient text-white py-3 px-4 rounded-xl font-bold flex items-center justify-center space-x-2">
+            <span>Balance Add</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- MAIN CONTENT CONTAINER -->
+    <!-- ========================================================================= -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+
+      <!-- TOP HEADER BAR -->
+      <header
+        class="h-20 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 sticky top-0 z-20 px-4 sm:px-8 flex items-center justify-between">
+
+        <div class="flex items-center space-x-4">
+          <button id="hamburger-btn"
+            class="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          <div class="relative hidden sm:block w-64 md:w-80">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <input id="table-search-input" type="text" placeholder="Search tables... (Ctrl+K)"
+              class="w-full pl-10 pr-4 py-2 bg-slate-100/80 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 rounded-xl text-xs font-medium text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/40">
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+          <button id="action-sync-btn" title="Sync Telemetry"
+            class="hidden sm:flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200/60 dark:border-emerald-800/60 hover:bg-emerald-100 transition-colors">
+            <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span>Live Sync</span>
+          </button>
+
+          <button id="theme-toggle-btn" title="Toggle Light / Dark Mode"
+            class="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            <svg id="theme-moon-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+            <svg id="theme-sun-icon" class="w-5 h-5 hidden text-amber-400" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </button>
+
+          <div class="h-6 w-[1px] bg-slate-200 dark:bg-slate-800"></div>
+
+          <div class="flex items-center space-x-3 pl-1">
+            <div
+              class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 p-0.5 shadow-md flex items-center justify-center text-white font-bold text-sm">
+              AD
+            </div>
+            <div class="hidden lg:flex flex-col text-left">
+              <span class="text-xs font-bold text-slate-800 dark:text-slate-100">Administrator</span>
+              <span class="text-[11px] font-medium text-emerald-600 dark:text-emerald-400">admin@nirmal.com</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- DASHBOARD PAGE VIEWS CONTAINER -->
+      <main class="flex-1 p-4 sm:p-8 space-y-8 max-w-7xl mx-auto w-full">
+
+        <!-- ===================================================================== -->
+        <!-- VIEW 1: DASHBOARD (#dashboard-view) -->
+        <!-- ===================================================================== -->
+        <section id="dashboard-view" class="page-view space-y-8">
+
+          <!-- Banner -->
+          <div
+            class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+            <div class="relative z-10 space-y-2">
+              <div
+                class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-emerald-300 text-xs font-semibold">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Live Control Hub</span>
+              </div>
+              <h1 class="text-2xl sm:text-3xl font-extrabold">Welcome back, Admin! 👋</h1>
+              <p class="text-sm text-emerald-100/80 max-w-xl">Monitor your VM stations, connected machines, products
+                inventory, and customer balances in real-time.</p>
+            </div>
+
+            <button
+              class="open-balance-modal-btn btn-emerald-gradient text-white font-extrabold text-base py-3.5 px-7 rounded-xl flex items-center space-x-3 shadow-2xl hover:scale-105 transition-all">
+              <span>Balance Add</span>
+            </button>
+          </div>
+
+          <!-- Stat Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="glass-panel rounded-2xl p-6 hover-lift">
+              <span class="text-xs font-bold tracking-wider uppercase text-slate-500">VM Stations</span>
+              <div class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2 counter-value" data-target="5">5
+              </div>
+              <p class="text-xs text-emerald-600 mt-2 font-semibold">100% Operational</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 hover-lift">
+              <span class="text-xs font-bold tracking-wider uppercase text-slate-500">Machines</span>
+              <div class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2 counter-value" data-target="13">13
+              </div>
+              <p class="text-xs text-teal-600 mt-2 font-semibold">99.8% Uptime</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 hover-lift">
+              <span class="text-xs font-bold tracking-wider uppercase text-slate-500">Products</span>
+              <div class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2 counter-value" data-target="152">
+                152</div>
+              <p class="text-xs text-sky-600 mt-2 font-semibold">High Inventory</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 hover-lift">
+              <span class="text-xs font-bold tracking-wider uppercase text-slate-500">Customers</span>
+              <div class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2 counter-value" data-target="71">71
+              </div>
+              <p class="text-xs text-indigo-600 mt-2 font-semibold">+14% Growth</p>
+            </div>
+          </div>
+
+          <!-- Dashboard Stations Preview Grid -->
+          <div class="glass-panel rounded-2xl p-6 space-y-4">
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Active VM Stations</h3>
+            <div id="dashboard-stations-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ===================================================================== -->
+        <!-- VIEW 2: POWER / MACHINES (#machines-view) -->
+        <!-- ===================================================================== -->
+        <section id="machines-view" class="page-view hidden space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white">VM Station / Machine Management</h1>
+              <p class="text-xs text-slate-500 dark:text-slate-400">View, add, and manage VM Stations and vending
+                machines</p>
+            </div>
+
+            <button id="open-station-modal-btn"
+              class="btn-emerald-gradient text-white font-bold py-3 px-5 rounded-xl shadow-lg flex items-center space-x-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              <span>Add VM Station</span>
+            </button>
+          </div>
+
+          <div class="glass-panel rounded-2xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200/80 dark:border-slate-800/80 text-[11px] font-bold tracking-wider uppercase text-slate-400">
+                    <th class="px-6 py-4">No</th>
+                    <th class="px-6 py-4">Name</th>
+                    <th class="px-6 py-4">Code</th>
+                    <th class="px-6 py-4">Address</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="machines-tbody" class="divide-y divide-slate-200/60 dark:divide-slate-800/60">
+                  <!-- Rendered via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ===================================================================== -->
+        <!-- VIEW 3: CUSTOMERS (#customers-view) -->
+        <!-- ===================================================================== -->
+        <section id="customers-view" class="page-view hidden space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white">Customer Directory</h1>
+              <p class="text-xs text-slate-500 dark:text-slate-400">View customer accounts, RFID cards, balance top-ups,
+                and actions</p>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <button
+                class="open-balance-modal-btn bg-slate-800 dark:bg-slate-700 text-white font-semibold py-3 px-4 rounded-xl text-xs">
+                Top-up Balance
+              </button>
+              <button id="open-customer-modal-btn"
+                class="btn-emerald-gradient text-white font-bold py-3 px-5 rounded-xl shadow-lg flex items-center space-x-2 text-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                <span>Add Customer</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="glass-panel rounded-2xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200/80 dark:border-slate-800/80 text-[11px] font-bold tracking-wider uppercase text-slate-400">
+                    <th class="px-6 py-4">No</th>
+                    <th class="px-6 py-4">User Name</th>
+                    <th class="px-6 py-4">User Email</th>
+                    <th class="px-6 py-4">Contact No</th>
+                    <th class="px-6 py-4">Balance ($)</th>
+                    <th class="px-6 py-4">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="customers-tbody" class="divide-y divide-slate-200/60 dark:divide-slate-800/60">
+                  <!-- Rendered via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ===================================================================== -->
+        <!-- VIEW 4: PRODUCTS (#products-view) -->
+        <!-- ===================================================================== -->
+        <section id="products-view" class="page-view hidden space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white">Product Catalog</h1>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Manage products, unit sizes, GST, prices, and
+                machine mappings</p>
+            </div>
+
+            <button id="open-product-modal-btn"
+              class="btn-emerald-gradient text-white font-bold py-3 px-5 rounded-xl shadow-lg flex items-center space-x-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              <span>Add Product</span>
+            </button>
+          </div>
+
+          <div class="glass-panel rounded-2xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200/80 dark:border-slate-800/80 text-[11px] font-bold tracking-wider uppercase text-slate-400">
+                    <th class="px-6 py-4">Machine Name</th>
+                    <th class="px-6 py-4">Product Name</th>
+                    <th class="px-6 py-4">UOM</th>
+                    <th class="px-6 py-4">Unit Size</th>
+                    <th class="px-6 py-4">Final Price</th>
+                    <th class="px-6 py-4">GST</th>
+                    <th class="px-6 py-4">MRP</th>
+                    <th class="px-6 py-4">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="products-tbody" class="divide-y divide-slate-200/60 dark:divide-slate-800/60">
+                  <!-- Rendered via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Placeholders for Reports, Billing, Settings -->
+        <section id="reports-view" class="page-view hidden space-y-6">
+          <h1 class="text-2xl font-bold">Reports & Analytics</h1>
+          <p class="text-sm text-slate-500">Comprehensive exportable revenue, machine sales, and customer usage reports.
+          </p>
+        </section>
+
+        <section id="billing-view" class="page-view hidden space-y-6">
+          <h1 class="text-2xl font-bold">Billing & Top-ups</h1>
+          <p class="text-sm text-slate-500">Billing transactions, invoice histories, and payment logs.</p>
+        </section>
+
+        <section id="settings-view" class="page-view hidden space-y-6">
+          <h1 class="text-2xl font-bold">System Settings</h1>
+          <p class="text-sm text-slate-500">Configure VM Station parameters, gateway API keys, and notification
+            channels.</p>
+        </section>
+
+      </main>
+
+      <!-- FOOTER -->
+      <footer
+        class="mt-auto py-6 px-4 sm:px-8 border-t border-slate-200/80 dark:border-slate-800/80 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md text-center text-xs font-semibold text-slate-500 dark:text-slate-400">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p>© 2026 Design. Code. Create. Repeat </p>
+          <div class="flex items-center space-x-4 text-slate-400">
+            <a href="#privacy" class="hover:text-emerald-600">Privacy Policy</a>
+            <span>•</span>
+            <a href="#terms" class="hover:text-emerald-600">Terms of Service</a>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+
+  <!-- ========================================================================= -->
+  <!-- MODAL 1: ADD VM STATION -->
+  <!-- ========================================================================= -->
+  <div id="station-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div id="station-modal-backdrop"
+      class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+    <div id="station-modal-box"
+      class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 transform scale-95 opacity-0 transition-all duration-300 z-10 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+        <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">Add VM Station</h3>
+        <button id="close-station-modal-btn" class="p-2 text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+      <form id="station-add-form" class="space-y-4">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Station Name *</label>
+            <input id="station-name-input" type="text" required placeholder="e.g. Station Alpha"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Station Code *</label>
+            <input id="station-code-input" type="text" required placeholder="e.g. STA-01"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Phone No</label>
+            <input id="station-phone-input" type="text" placeholder="9876543210"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Email</label>
+            <input id="station-email-input" type="email" placeholder="station@nirmal.com"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">City</label>
+          <input id="station-city-input" type="text" placeholder="Ahmedabad"
+            class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Address</label>
+          <textarea id="station-address-input" rows="2" placeholder="Full station address..."
+            class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs"></textarea>
+        </div>
+        <div class="flex items-center space-x-3 pt-3">
+          <button type="button" id="cancel-station-modal-btn"
+            class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600">Cancel</button>
+          <button type="submit"
+            class="flex-1 btn-emerald-gradient text-white py-2.5 rounded-xl text-xs font-extrabold">Save
+            Station</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================= -->
+  <!-- MODAL 2: ADD CUSTOMER -->
+  <!-- ========================================================================= -->
+  <div id="customer-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div id="customer-modal-backdrop"
+      class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+    <div id="customer-modal-box"
+      class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 transform scale-95 opacity-0 transition-all duration-300 z-10 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+        <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">Add New Customer</h3>
+        <button id="close-customer-modal-btn" class="p-2 text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+      <form id="customer-add-form" class="space-y-4">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">First Name *</label>
+            <input id="cust-firstname-input" type="text" required placeholder="John"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Last Name</label>
+            <input id="cust-lastname-input" type="text" placeholder="Doe"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Email *</label>
+            <input id="cust-email-input" type="email" required placeholder="john@example.com"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Mobile No *</label>
+            <input id="cust-mobile-input" type="text" required placeholder="9876543210"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Billing Type</label>
+            <select id="cust-billing-select"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+              <option value="Pre-Paid">Pre-Paid</option>
+              <option value="Post-Paid">Post-Paid</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">City</label>
+            <input id="cust-city-input" type="text" placeholder="Ahmedabad"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 pt-3">
+          <button type="button" id="cancel-customer-modal-btn"
+            class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600">Cancel</button>
+          <button type="submit"
+            class="flex-1 btn-emerald-gradient text-white py-2.5 rounded-xl text-xs font-extrabold">Save
+            Customer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================= -->
+  <!-- MODAL 3: ADD PRODUCT -->
+  <!-- ========================================================================= -->
+  <div id="product-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div id="product-modal-backdrop"
+      class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+    <div id="product-modal-box"
+      class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 transform scale-95 opacity-0 transition-all duration-300 z-10 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+        <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">Add New Product</h3>
+        <button id="close-product-modal-btn" class="p-2 text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+      <form id="product-add-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Machine *</label>
+          <select id="prod-machine-select" required
+            class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+            <option value="ASMT ASMT">ASMT ASMT</option>
+            <option value="CMP001 CMP001">CMP001 CMP001</option>
+            <option value="ZYDVEND ZYD003">ZYDVEND ZYD003</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Product Name *</label>
+            <input id="prod-name-input" type="text" required placeholder="e.g. Amul Fresh Milk"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">UOM</label>
+            <select id="prod-uom-select"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+              <option value="Liter">Liter</option>
+              <option value="Kg">Kg</option>
+              <option value="Piece">Piece</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Unit Size</label>
+            <input id="prod-unitsize-input" type="text" placeholder="1"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Price ($)</label>
+            <input id="prod-price-input" type="number" step="0.01" placeholder="10.00"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">GST (%)</label>
+            <input id="prod-gst-input" type="number" step="0.01" placeholder="6.0"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">MRP ($)</label>
+          <input id="prod-mrp-input" type="number" step="0.01" placeholder="12.00"
+            class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+        </div>
+        <div class="flex items-center space-x-3 pt-3">
+          <button type="button" id="cancel-product-modal-btn"
+            class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600">Cancel</button>
+          <button type="submit"
+            class="flex-1 btn-emerald-gradient text-white py-2.5 rounded-xl text-xs font-extrabold">Save
+            Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================= -->
+  <!-- MODAL 4: DELETE CONFIRMATION -->
+  <!-- ========================================================================= -->
+  <div id="delete-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div id="delete-modal-backdrop"
+      class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+    <div id="delete-modal-box"
+      class="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 transform scale-95 opacity-0 transition-all duration-300 z-10 space-y-4 text-center">
+      <div
+        class="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 mx-auto flex items-center justify-center font-bold text-xl">
+        ⚠️
+      </div>
+      <h3 class="text-base font-bold text-slate-900 dark:text-white">Confirm Deletion</h3>
+      <p class="text-xs text-slate-500">Are you sure you want to delete <span id="delete-item-name"
+          class="font-bold text-slate-800 dark:text-slate-200">this entry</span>? This action cannot be undone.</p>
+      <div class="flex items-center space-x-3 pt-2">
+        <button type="button" id="cancel-delete-modal-btn"
+          class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600">Cancel</button>
+        <button type="button" id="confirm-delete-btn"
+          class="flex-1 bg-rose-600 hover:bg-rose-700 text-white py-2.5 rounded-xl text-xs font-extrabold shadow-md">Yes,
+          Delete</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================= -->
+  <!-- MODAL 5: BALANCE ADD -->
+  <!-- ========================================================================= -->
+  <div id="balance-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div id="balance-modal-backdrop"
+      class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+    <div id="balance-modal-box"
+      class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 transform scale-95 opacity-0 transition-all duration-300 z-10 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+        <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">Add Balance</h3>
+        <button id="close-balance-modal-btn" class="p-2 text-slate-400 hover:text-slate-600">✕</button>
+      </div>
+      <form id="balance-add-form" class="space-y-5">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-2">Customer Account</label>
+          <select id="balance-customer-select"
+            class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs font-medium">
+            <option value="jobin mackwan">jobin mackwan (xyz@gmail.com)</option>
+            <option value="Nirmal Panchal">Nirmal Panchal (123@123.co)</option>
+            <option value="N P">N P (123@123.co)</option>
+            <option value="Ruchi as">Ruchi as (assd@gmail.com)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-2">Amount ($)</label>
+          <div class="grid grid-cols-4 gap-2 mb-3">
+            <button type="button" data-value="10"
+              class="quick-amount-pill py-2 text-xs font-bold rounded-xl border">+$10</button>
+            <button type="button" data-value="25"
+              class="quick-amount-pill py-2 text-xs font-bold rounded-xl border">+$25</button>
+            <button type="button" data-value="50"
+              class="quick-amount-pill py-2 text-xs font-bold rounded-xl border">+$50</button>
+            <button type="button" data-value="100"
+              class="quick-amount-pill py-2 text-xs font-bold rounded-xl border">+$100</button>
+          </div>
+          <input id="balance-amount-input" type="number" step="0.01" min="1" placeholder="0.00" required
+            class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border rounded-xl text-lg font-bold">
+        </div>
+        <div class="flex items-center space-x-3 pt-4">
+          <button type="button" id="cancel-balance-modal-btn"
+            class="flex-1 py-3 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600">Cancel</button>
+          <button type="submit"
+            class="flex-1 btn-emerald-gradient text-white font-extrabold text-xs py-3 rounded-xl">Confirm Balance
+            Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+
+</html>

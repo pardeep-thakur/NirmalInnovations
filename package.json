@@ -1,0 +1,22 @@
+{
+  "name": "nirmal-admin-dashboard",
+  "version": "2.0.0",
+  "description": "Redesigned and Modernized Admin Dashboard for Nirmal Innovations",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "keywords": [
+    "dashboard",
+    "admin",
+    "tailwind",
+    "express",
+    "nirmal-innovations"
+  ],
+  "author": "Nirmal Innovations",
+  "license": "ISC"
+}
