@@ -402,40 +402,221 @@
         <!-- VIEW 2: POWER / MACHINES (#machines-view) -->
         <!-- ===================================================================== -->
         <section id="machines-view" class="page-view hidden space-y-6">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white">VM Station / Machine Management</h1>
-              <p class="text-xs text-slate-500 dark:text-slate-400">View, add, and manage VM Stations and vending
-                machines</p>
-            </div>
 
-            <button id="open-station-modal-btn"
-              class="btn-emerald-gradient text-white font-bold py-3 px-5 rounded-xl shadow-lg flex items-center space-x-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          <!-- Top Navigation Tabs Matching Staging Portal -->
+          <div class="flex items-center space-x-2 border-b border-slate-200/80 dark:border-slate-800/80 pb-2 overflow-x-auto select-none">
+            <!-- 1. VM Station Tab -->
+            <button type="button" id="tab-btn-vmstation" data-tab="vmstation"
+              class="vm-tab-btn flex items-center space-x-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all bg-emerald-600 text-white shadow-lg shadow-emerald-600/25 cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
-              <span>Add VM Station</span>
+              <span>VM Station</span>
+              <span id="tab-vmstation-count" class="px-2 py-0.5 rounded-full text-xs font-bold bg-white/20 text-white">7</span>
+            </button>
+
+            <!-- 2. Machine Tab -->
+            <button type="button" id="tab-btn-machine" data-tab="machine"
+              class="vm-tab-btn flex items-center space-x-2 px-5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span>Machine</span>
+              <span id="tab-machine-count" class="px-2 py-0.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">20</span>
+            </button>
+
+            <!-- 3. Product Tab -->
+            <button type="button" id="tab-btn-product" data-tab="product"
+              class="vm-tab-btn flex items-center space-x-2 px-5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              </svg>
+              <span>Product</span>
+              <span id="tab-product-count" class="px-2 py-0.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">76</span>
             </button>
           </div>
 
-          <div class="glass-panel rounded-2xl overflow-hidden shadow-sm">
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr
-                    class="bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200/80 dark:border-slate-800/80 text-[11px] font-bold tracking-wider uppercase text-slate-400">
-                    <th class="px-6 py-4">No</th>
-                    <th class="px-6 py-4">Name</th>
-                    <th class="px-6 py-4">Code</th>
-                    <th class="px-6 py-4">Address</th>
-                    <th class="px-6 py-4">Status</th>
-                    <th class="px-6 py-4">Action</th>
-                  </tr>
-                </thead>
-                <tbody id="machines-tbody" class="divide-y divide-slate-200/60 dark:divide-slate-800/60">
-                  <!-- Rendered via JS -->
-                </tbody>
-              </table>
+          <!-- ================================================================= -->
+          <!-- TAB PANEL 1: VM STATION -->
+          <!-- ================================================================= -->
+          <div id="panel-vmstation" class="vm-tab-panel space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white">VM station List</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400">View, add, and manage operational VM charging & vending stations</p>
+              </div>
+
+              <div class="flex items-center space-x-3">
+                <button id="open-station-modal-btn"
+                  class="btn-emerald-gradient text-white font-bold py-2.5 px-4 rounded-xl shadow-lg flex items-center space-x-2 text-xs">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  <span>Add VM Station</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="glass-panel rounded-2xl overflow-hidden shadow-sm">
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr
+                      class="bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200/80 dark:border-slate-800/80 text-[11px] font-bold tracking-wider uppercase text-slate-400">
+                      <th class="px-6 py-4">No</th>
+                      <th class="px-6 py-4">Name</th>
+                      <th class="px-6 py-4">Code</th>
+                      <th class="px-6 py-4">Address</th>
+                      <th class="px-6 py-4">Status</th>
+                      <th class="px-6 py-4">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="machines-tbody" class="divide-y divide-slate-200/60 dark:divide-slate-800/60">
+                    <!-- Rendered via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================================================================= -->
+          <!-- TAB PANEL 2: MACHINE (Authentic Staging Data & Columns) -->
+          <!-- ================================================================= -->
+          <div id="panel-machine" class="vm-tab-panel hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white">Machine List</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Connected vending and dispensing machines across all VM stations</p>
+              </div>
+
+              <div class="flex items-center space-x-3">
+                <button id="open-machine-modal-btn"
+                  class="btn-emerald-gradient text-white font-bold py-2.5 px-4 rounded-xl shadow-lg flex items-center space-x-2 text-xs">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  <span>Add Machine</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Filters for Machine Tab -->
+            <div class="flex flex-wrap items-center gap-3 bg-slate-50/80 dark:bg-slate-900/60 p-3 rounded-2xl border border-slate-200/80 dark:border-slate-800/80">
+              <div class="flex items-center space-x-2 text-xs text-slate-500 font-semibold">
+                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
+                <span>Filters:</span>
+              </div>
+              <select id="filter-machine-station"
+                class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-medium">
+                <option value="">All Stations (7)</option>
+              </select>
+              <select id="filter-machine-type"
+                class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-medium">
+                <option value="">All Machine Types</option>
+                <option value="Milk Machine">Milk Machine</option>
+                <option value="Product Machine">Product Machine</option>
+                <option value="Office">Office</option>
+              </select>
+              <select id="filter-machine-status"
+                class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-medium">
+                <option value="">All Status</option>
+                <option value="Active">Active</option>
+                <option value="Dective">Dective</option>
+              </select>
+              <input id="search-machine-input" type="text" placeholder="Search code, serial number, vendor..."
+                class="flex-1 min-w-[200px] px-3.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs">
+            </div>
+
+            <div class="glass-panel rounded-2xl overflow-hidden shadow-sm">
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr
+                      class="bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200/80 dark:border-slate-800/80 text-[11px] font-bold tracking-wider uppercase text-slate-400">
+                      <th class="px-6 py-4">No</th>
+                      <th class="px-6 py-4">Station Name</th>
+                      <th class="px-6 py-4">Code</th>
+                      <th class="px-6 py-4">Serial Number</th>
+                      <th class="px-6 py-4">Type</th>
+                      <th class="px-6 py-4">Status</th>
+                      <th class="px-6 py-4">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="machine-list-tbody" class="divide-y divide-slate-200/60 dark:divide-slate-800/60">
+                    <!-- Rendered via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================================================================= -->
+          <!-- TAB PANEL 3: PRODUCT (Authentic Staging Data & Columns) -->
+          <!-- ================================================================= -->
+          <div id="panel-product" class="vm-tab-panel hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white">Product List</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Product catalog, pricing, GST, and vending machine assignments</p>
+              </div>
+
+              <div class="flex items-center space-x-3">
+                <button id="open-product-modal-tab-btn"
+                  class="btn-emerald-gradient text-white font-bold py-2.5 px-4 rounded-xl shadow-lg flex items-center space-x-2 text-xs">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  <span>Add Product</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Filters for Product Tab -->
+            <div class="flex flex-wrap items-center gap-3 bg-slate-50/80 dark:bg-slate-900/60 p-3 rounded-2xl border border-slate-200/80 dark:border-slate-800/80">
+              <div class="flex items-center space-x-2 text-xs text-slate-500 font-semibold">
+                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
+                <span>Filters:</span>
+              </div>
+              <select id="filter-product-machine"
+                class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-medium">
+                <option value="">All Machines</option>
+              </select>
+              <select id="filter-product-status"
+                class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-medium">
+                <option value="">All Status</option>
+                <option value="Enabled">Enabled</option>
+                <option value="Disabled">Disabled</option>
+              </select>
+              <input id="search-product-input" type="text" placeholder="Search product name, UOM, price..."
+                class="flex-1 min-w-[200px] px-3.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs">
+            </div>
+
+            <div class="glass-panel rounded-2xl overflow-hidden shadow-sm">
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr
+                      class="bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200/80 dark:border-slate-800/80 text-[11px] font-bold tracking-wider uppercase text-slate-400">
+                      <th class="px-6 py-4">Machine Name</th>
+                      <th class="px-6 py-4">Product Name</th>
+                      <th class="px-6 py-4">UOM</th>
+                      <th class="px-6 py-4">Unit Size</th>
+                      <th class="px-6 py-4">Final Price</th>
+                      <th class="px-6 py-4">GST</th>
+                      <th class="px-6 py-4">MRP</th>
+                      <th class="px-6 py-4">Status</th>
+                      <th class="px-6 py-4">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="products-tab-tbody" class="divide-y divide-slate-200/60 dark:divide-slate-800/60">
+                    <!-- Rendered via JS -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </section>
@@ -625,6 +806,82 @@
           <button type="submit"
             class="flex-1 btn-emerald-gradient text-white py-2.5 rounded-xl text-xs font-extrabold">Save
             Station</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: ADD MACHINE -->
+  <!-- ========================================================================= -->
+  <div id="machine-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div id="machine-modal-backdrop"
+      class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+    <div id="machine-modal-box"
+      class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 transform scale-95 opacity-0 transition-all duration-300 z-10 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+        <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">Add New Machine</h3>
+        <button id="close-machine-modal-btn" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">✕</button>
+      </div>
+      <form id="machine-add-form" class="space-y-4">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">VM Station *</label>
+            <select id="machine-station-select" required
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+              <option value="ASD">ASD</option>
+              <option value="Nirmal Test">Nirmal Test</option>
+              <option value="Zydus">Zydus</option>
+              <option value="Tea Vend 1">Tea Vend 1</option>
+              <option value="Tea Vend 2">Tea Vend 2</option>
+              <option value="Tea Vend 3">Tea Vend 3</option>
+              <option value="Hiren1">Hiren1</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Machine Type *</label>
+            <select id="machine-type-select" required
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+              <option value="Product Machine">Product Machine</option>
+              <option value="Milk Machine">Milk Machine</option>
+              <option value="Office">Office</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Machine Code *</label>
+            <input id="machine-code-input" type="text" required placeholder="e.g. CMP006"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Serial Number *</label>
+            <input id="machine-serial-input" type="text" required placeholder="e.g. 006"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Vendor</label>
+            <input id="machine-vendor-input" type="text" placeholder="e.g. Nirmal"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Status</label>
+            <select id="machine-status-select"
+              class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-xs">
+              <option value="Active">Active</option>
+              <option value="Dective">Dective</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 pt-3">
+          <button type="button" id="cancel-machine-modal-btn"
+            class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Cancel</button>
+          <button type="submit"
+            class="flex-1 btn-emerald-gradient text-white py-2.5 rounded-xl text-xs font-extrabold">Save
+            Machine</button>
         </div>
       </form>
     </div>
@@ -892,6 +1149,7 @@
     </div>
   </div>
 
+  <script src="js/staging-data.js"></script>
   <script src="js/app.js"></script>
 </body>
 

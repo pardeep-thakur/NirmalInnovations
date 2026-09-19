@@ -4,15 +4,23 @@
  * Supports both Live Express Backend and Static GitHub Pages / Offline Demo
  */
 
-// Initial Seed Data
-const DEFAULT_STATIONS = [
-  { id: '1', name: 'ASD', code: 'ASD', address: 'Ahmedabad Gujarat India 380001', latitude: '23.0225', longitude: '72.5714', phone: '9876543210', email: 'asd@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380001', status: 'Enabled' },
-  { id: '2', name: 'Nirmal Test', code: 'Nirmal', address: '123 street India 380001', latitude: '23.0300', longitude: '72.5800', phone: '9925069523', email: 'nirmal@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380001', status: 'Enabled' },
-  { id: '3', name: 'Zydus', code: 'ZYD', address: 'Ahmedabad Gujarat India 380001', latitude: '22.9900', longitude: '72.5100', phone: '9825069523', email: 'zydus@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380001', status: 'Enabled' },
-  { id: '4', name: 'Tea Vend 1', code: 'TV1', address: 'a-211, it slos, sg highway Ahmedabad Gujarat India 380015', latitude: '23.0400', longitude: '72.5200', phone: '8866041036', email: 'tv1@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380015', status: 'Enabled' },
-  { id: '5', name: 'Tea Vend 2', code: 'TV2', address: 'a-211, it slos, sg highway Ahmedabad Gujarat India 380015', latitude: '23.0410', longitude: '72.5210', phone: '8866041037', email: 'tv2@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380015', status: 'Enabled' },
-  { id: '6', name: 'Tea Vend 3', code: 'TV3', address: 'a-211, it slos, sg highway Ahmedabad Gujarat India 380015', latitude: '23.0420', longitude: '72.5220', phone: '8866041038', email: 'tv3@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380015', status: 'Enabled' },
-  { id: '7', name: 'Hiren1', code: 'H1', address: 'a-211, it slos, sg highway Ahmedabad Gujarat India 380015', latitude: '23.0450', longitude: '72.5250', phone: '9106897179', email: 'hiren@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380015', status: 'Enabled' }
+// Initial Seed Data (Authentic staging data with fallbacks)
+const DEFAULT_STATIONS = (typeof STAGING_STATIONS !== 'undefined') ? STAGING_STATIONS : [
+  { id: '1', name: 'ASD', code: 'AD003', address: 'Kargil Chok, Baroda', latitude: '23.0225', longitude: '72.5714', phone: '9876543210', email: 'asd@nirmal.com', country: 'India', state: 'Gujarat', city: 'Baroda', zip: '380001', status: 'Active' },
+  { id: '2', name: 'Nirmal Test', code: '380004', address: '4, Chanduji madhaji estate', latitude: '23.0300', longitude: '72.5800', phone: '9925069523', email: 'nirmal@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380004', status: 'Active' },
+  { id: '3', name: 'Zydus', code: '001', address: 'Zydus Infra, Changodar', latitude: '22.9900', longitude: '72.5100', phone: '9825069523', email: 'zydus@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380001', status: 'Active' },
+  { id: '4', name: 'Tea Vend 1', code: 'ASM1', address: '4, Chanduji madhaji estate maheshwari Mill Road, Tavdipura', latitude: '23.0400', longitude: '72.5200', phone: '8866041036', email: 'tv1@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380015', status: 'Active' },
+  { id: '5', name: 'Tea Vend 2', code: 'ASM2', address: '4, Chanduji madhaji estate maheshwari Mill Road, Tavdipura', latitude: '23.0410', longitude: '72.5210', phone: '8866041037', email: 'tv2@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380015', status: 'Dective' },
+  { id: '6', name: 'Tea Vend 3', code: 'ASM3', address: '4, Chanduji madhaji estate maheshwari Mill Road, Tavdipura', latitude: '23.0420', longitude: '72.5220', phone: '8866041038', email: 'tv3@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380015', status: 'Dective' },
+  { id: '7', name: 'Hiren1', code: 'HVM123', address: '4, Chanduji madhaji estate maheshwari Mill Road, Tavdipura', latitude: '23.0450', longitude: '72.5250', phone: '9106897179', email: 'hiren@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380015', status: 'Active' }
+];
+
+const DEFAULT_MACHINES = (typeof STAGING_MACHINES !== 'undefined') ? STAGING_MACHINES : [
+  { id: '1', no: 1, station: 'ASD', code: 'ASD001', serialNumber: '789456', type: 'Milk Machine', status: 'Active', vendor: 'Vijay Security Systems Pvt Ltd' },
+  { id: '2', no: 2, station: 'ASD', code: 'CMP001', serialNumber: '001', type: 'Product Machine', status: 'Active', vendor: 'Nirmal' },
+  { id: '3', no: 3, station: 'ASD', code: 'CMP002', serialNumber: '001', type: 'Product Machine', status: 'Active', vendor: 'Nirmal' },
+  { id: '4', no: 4, station: 'ASD', code: 'HPA001', serialNumber: '003', type: 'Product Machine', status: 'Active', vendor: 'HPA' },
+  { id: '5', no: 5, station: 'Nirmal Test', code: 'CMP003', serialNumber: '3', type: 'Product Machine', status: 'Active', vendor: 'Nirmal' }
 ];
 
 const DEFAULT_CUSTOMERS = [
@@ -28,24 +36,19 @@ const DEFAULT_CUSTOMERS = [
   { id: '10', name: 'demoqwer Mehta', email: 'asdgiuygih@gmail.com', contact: '9598714254', balance: 100.00, billing: 'Pre-Paid', city: 'Ahmedabad' }
 ];
 
-const DEFAULT_PRODUCTS = [
-  { id: '1', machine: 'ASMT ASMT', name: 'Tea 500Grms', image: 'tea.jpg', uom: 'Kg', unitSize: '1', price: 1.00, gst: 1.00, mrp: 1.00, minQty: '1', status: 'Enabled' },
-  { id: '2', machine: 'CMP001 CMP001', name: 'Amul Gold', image: 'amul_gold.jpg', uom: 'Liter', unitSize: '0.500', price: 27.26, gst: 6.00, mrp: 29.00, minQty: '1', status: 'Disabled' },
-  { id: '3', machine: 'CMP001 CMP001', name: 'Amul Taza', image: 'amul_taza.jpg', uom: 'Liter', unitSize: '0.500', price: 23.50, gst: 6.00, mrp: 25.00, minQty: '1', status: 'Disabled' },
-  { id: '4', machine: 'CMP001 CMP001', name: 'Amul Shakti', image: 'amul_shakti.jpg', uom: 'Liter', unitSize: '0.500', price: 19.74, gst: 6.00, mrp: 21.00, minQty: '1', status: 'Disabled' },
-  { id: '5', machine: 'CMP001 CMP001', name: '46.Ferrero Rocher - Chocolate (24 pcs)', image: 'ferrero.jpg', uom: 'Piece', unitSize: '1', price: 737.29, gst: 18.00, mrp: 870.00, minQty: '1', status: 'Disabled' },
-  { id: '6', machine: 'ZYDVEND ZYD003', name: '31.JEERA MASALA', image: 'jeera.jpg', uom: 'Liter', unitSize: '1', price: 1.00, gst: 0.00, mrp: 1.00, minQty: '1', status: 'Enabled' },
-  { id: '7', machine: 'ZYDVEND ZYD003', name: '34.COCA COLA', image: 'cocacola.jpg', uom: 'Liter', unitSize: '1', price: 20.00, gst: 0.00, mrp: 20.00, minQty: '1', status: 'Disabled' },
-  { id: '8', machine: 'ZYDVEND ZYD003', name: '32. SPRITE', image: 'sprite.jpg', uom: 'Liter', unitSize: '1', price: 10.00, gst: 0.00, mrp: 10.00, minQty: '1', status: 'Enabled' },
-  { id: '9', machine: 'ZYDVEND ZYD003', name: '36.BISLERI', image: 'bisleri.jpg', uom: 'Liter', unitSize: '1', price: 10.00, gst: 0.00, mrp: 10.00, minQty: '1', status: 'Disabled' },
-  { id: '10', machine: 'ZYDVEND ZYD003', name: '37.PEPSI', image: 'pepsi.jpg', uom: 'Liter', unitSize: '1', price: 20.00, gst: 0.00, mrp: 20.00, minQty: '1', status: 'Disabled' }
+const DEFAULT_PRODUCTS = (typeof STAGING_PRODUCTS !== 'undefined') ? STAGING_PRODUCTS : [
+  { id: '1', machine: 'ASMT ASMT', name: 'Tea 500Grms', uom: 'Kg', unitSize: '1', price: 1.00, gst: 1.00, mrp: 1.00, minQty: '1', status: 'Enabled' },
+  { id: '2', machine: 'CMP001 CMP001', name: 'Amul Gold', uom: 'Liter', unitSize: '0.500', price: 27.26, gst: 6.00, mrp: 29.00, minQty: '1', status: 'Disabled' },
+  { id: '3', machine: 'CMP001 CMP001', name: 'Amul Taza', uom: 'Liter', unitSize: '0.500', price: 23.50, gst: 6.00, mrp: 25.00, minQty: '1', status: 'Disabled' }
 ];
 
 // App State
 let state = {
   stations: [],
+  machines: [],
   customers: [],
   products: [],
+  activeVmTab: 'vmstation',
   deleteTarget: null
 };
 
@@ -70,16 +73,21 @@ document.addEventListener('DOMContentLoaded', () => {
   initRouter();
   initSidebar();
   initAnimations();
+  initVmTabs();
   initBalanceModal();
   initStationModal();
+  initMachineModal();
   initCustomerModal();
   initProductModal();
   initDeleteModal();
   initTableFilters();
+  initMachineFilters();
+  initProductTabFilters();
   initQuickActions();
 
   // Load initial data
   fetchStations();
+  fetchMachines();
   fetchCustomers();
   fetchProducts();
 });
@@ -382,6 +390,57 @@ function initAnimations() {
 }
 
 /* ==========================================================================
+   4B. VM Station Sub-Tabs (VM Station | Machine | Product)
+   ========================================================================== */
+function initVmTabs() {
+  const tabs = [
+    { id: 'vmstation', btn: document.getElementById('tab-btn-vmstation'), panel: document.getElementById('panel-vmstation') },
+    { id: 'machine', btn: document.getElementById('tab-btn-machine'), panel: document.getElementById('panel-machine') },
+    { id: 'product', btn: document.getElementById('tab-btn-product'), panel: document.getElementById('panel-product') }
+  ];
+
+  window.switchVmTab = function(tabId) {
+    state.activeVmTab = tabId;
+    tabs.forEach(t => {
+      if (t.id === tabId) {
+        t.btn?.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-white', 'shadow-sm', 'border', 'border-slate-200/80', 'dark:border-slate-700/80');
+        t.btn?.classList.remove('text-slate-600', 'dark:text-slate-400');
+        t.panel?.classList.remove('hidden');
+      } else {
+        t.btn?.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-white', 'shadow-sm', 'border', 'border-slate-200/80', 'dark:border-slate-700/80');
+        t.btn?.classList.add('text-slate-600', 'dark:text-slate-400');
+        t.panel?.classList.add('hidden');
+      }
+    });
+
+    if (tabId === 'machine') {
+      renderMachinesTable();
+    } else if (tabId === 'product') {
+      renderProductsTabTable();
+    } else {
+      renderStationsTable();
+    }
+  };
+
+  tabs.forEach(t => {
+    if (t.btn) {
+      t.btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.switchVmTab(t.id);
+      });
+    }
+  });
+
+  const openProdTabModalBtn = document.getElementById('open-product-modal-tab-btn');
+  if (openProdTabModalBtn) {
+    openProdTabModalBtn.addEventListener('click', () => {
+      const openBtn = document.getElementById('open-product-modal-btn');
+      if (openBtn) openBtn.click();
+    });
+  }
+}
+
+/* ==========================================================================
    5. Data Fetching API Functions (Hybrid: Server API with LocalStorage Fallback)
    ========================================================================== */
 async function fetchStations() {
@@ -400,6 +459,27 @@ async function fetchStations() {
   }
   renderStationsTable();
   renderDashboardStationGrid();
+  populateMachineStationFilter();
+  updateBadges();
+}
+
+async function fetchMachines() {
+  try {
+    const res = await fetch('/api/machines');
+    if (!res.ok) throw new Error('API unavailable');
+    const data = await res.json();
+    if (data.success && Array.isArray(data.data)) {
+      state.machines = data.data;
+      setLocalData('machines', state.machines);
+    } else {
+      throw new Error('Invalid API response');
+    }
+  } catch (err) {
+    state.machines = getLocalData('machines', DEFAULT_MACHINES);
+  }
+  renderMachinesTable();
+  populateMachineStationFilter();
+  populateProductMachineFilter();
   updateBadges();
 }
 
@@ -437,6 +517,8 @@ async function fetchProducts() {
     state.products = getLocalData('products', DEFAULT_PRODUCTS);
   }
   renderProductsTable();
+  renderProductsTabTable();
+  populateProductMachineFilter();
   updateBadges();
 }
 
@@ -448,6 +530,14 @@ function updateBadges() {
   if (stationBadge) stationBadge.innerText = state.stations.length;
   if (customerBadge) customerBadge.innerText = state.customers.length;
   if (productBadge) productBadge.innerText = state.products.length;
+
+  const tabStationCount = document.getElementById('tab-vmstation-count');
+  const tabMachineCount = document.getElementById('tab-machine-count');
+  const tabProductCount = document.getElementById('tab-product-count');
+
+  if (tabStationCount) tabStationCount.innerText = state.stations.length;
+  if (tabMachineCount) tabMachineCount.innerText = state.machines.length;
+  if (tabProductCount) tabProductCount.innerText = state.products.length;
 
   const dashStation = document.getElementById('dash-station-count');
   const dashProduct = document.getElementById('dash-product-count');
@@ -467,8 +557,49 @@ function populateCustomerSelect() {
   `).join('');
 }
 
+function populateMachineStationFilter() {
+  const filterSelect = document.getElementById('filter-machine-station');
+  const modalSelect = document.getElementById('machine-station-select');
+
+  const stationNames = Array.from(new Set([
+    ...state.stations.map(s => s.name),
+    ...state.machines.map(m => m.station)
+  ])).filter(Boolean);
+
+  if (filterSelect) {
+    const currentVal = filterSelect.value;
+    filterSelect.innerHTML = `<option value="">All Stations (${stationNames.length})</option>` +
+      stationNames.map(name => `<option value="${name}" ${name === currentVal ? 'selected' : ''}>${name}</option>`).join('');
+  }
+
+  if (modalSelect && modalSelect.options.length <= 1) {
+    modalSelect.innerHTML = stationNames.map(name => `<option value="${name}">${name}</option>`).join('');
+  }
+}
+
+function populateProductMachineFilter() {
+  const filterSelect = document.getElementById('filter-product-machine');
+  const modalSelect = document.getElementById('prod-machine-select');
+
+  const machineNames = Array.from(new Set([
+    ...state.products.map(p => p.machine),
+    ...state.machines.map(m => `${m.code} ${m.code}`)
+  ])).filter(Boolean);
+
+  if (filterSelect) {
+    const currentVal = filterSelect.value;
+    filterSelect.innerHTML = `<option value="">All Machines (${machineNames.length})</option>` +
+      machineNames.map(name => `<option value="${name}" ${name === currentVal ? 'selected' : ''}>${name}</option>`).join('');
+  }
+
+  if (modalSelect) {
+    const curVal = modalSelect.value;
+    modalSelect.innerHTML = machineNames.map(name => `<option value="${name}" ${name === curVal ? 'selected' : ''}>${name}</option>`).join('');
+  }
+}
+
 /* ==========================================================================
-   6. Render Tables (VM Stations, Customers, Products)
+   6. Render Tables (VM Stations, Machines, Customers, Products)
    ========================================================================== */
 function renderStationsTable() {
   const tbody = document.getElementById('machines-tbody');
@@ -493,7 +624,7 @@ function renderStationsTable() {
       <td class="px-6 py-4 whitespace-nowrap text-sm text-emerald-600 dark:text-emerald-400 font-mono font-bold">${s.code}</td>
       <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 max-w-xs truncate" title="${s.address}">${s.address}</td>
       <td class="px-6 py-4 whitespace-nowrap">
-        <span class="px-2.5 py-1 text-xs font-semibold rounded-full ${s.status === 'Enabled' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'}">
+        <span class="px-2.5 py-1 text-xs font-semibold rounded-full ${s.status === 'Enabled' || s.status === 'Active' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'}">
           ${s.status}
         </span>
       </td>
@@ -504,6 +635,62 @@ function renderStationsTable() {
       </td>
     </tr>
   `).join('');
+}
+
+function renderMachinesTable(dataToRender = state.machines) {
+  const tbody = document.getElementById('machine-list-tbody');
+  if (!tbody) return;
+
+  if (dataToRender.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-8 text-center text-slate-400">No Machines found. Click 'Add Machine' to register one.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = dataToRender.map((m, idx) => {
+    const isMilk = m.type && m.type.toLowerCase().includes('milk');
+    const isOffice = m.type && m.type.toLowerCase().includes('office');
+    const typeBadgeClass = isMilk 
+      ? 'bg-sky-100 text-sky-800 dark:bg-sky-950/80 dark:text-sky-300 border border-sky-200/50 dark:border-sky-800/40' 
+      : isOffice 
+      ? 'bg-purple-100 text-purple-800 dark:bg-purple-950/80 dark:text-purple-300 border border-purple-200/50 dark:border-purple-800/40'
+      : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-200/50 dark:border-emerald-800/40';
+
+    const isActive = m.status === 'Active' || m.status === 'Enabled';
+    const statusBadgeClass = isActive
+      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300'
+      : 'bg-rose-100 text-rose-800 dark:bg-rose-950/80 dark:text-rose-300';
+
+    return `
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-900 dark:text-white">${m.no || idx + 1}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-900 dark:text-white">
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs">
+              ${m.station ? m.station.substring(0, 2).toUpperCase() : 'VM'}
+            </div>
+            <span>${m.station || 'ASD'}</span>
+          </div>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-emerald-600 dark:text-emerald-400 font-mono font-bold">${m.code}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-slate-600 dark:text-slate-300">${m.serialNumber || '-'}</td>
+        <td class="px-6 py-4 whitespace-nowrap">
+          <span class="px-2.5 py-1 text-xs font-semibold rounded-full ${typeBadgeClass}">
+            ${m.type || 'Product Machine'}
+          </span>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap">
+          <span class="px-2.5 py-1 text-xs font-semibold rounded-full ${statusBadgeClass}">
+            ${m.status || 'Active'}
+          </span>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+          <button onclick="triggerDelete('machine', '${m.id}', '${m.code}')" class="px-3 py-1 rounded-lg text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 border border-rose-200 dark:border-rose-900/60 transition-colors">
+            Delete
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join('');
 }
 
 function renderDashboardStationGrid() {
@@ -592,6 +779,50 @@ function renderProductsTable() {
   `).join('');
 }
 
+function renderProductsTabTable(dataToRender = state.products) {
+  const tbody = document.getElementById('products-tab-tbody');
+  if (!tbody) return;
+
+  if (dataToRender.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" class="px-6 py-8 text-center text-slate-400">No Products found in catalog.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = dataToRender.map((p) => {
+    const isEnabled = p.status === 'Enabled' || p.status === 'Active';
+    const statusBadgeClass = isEnabled
+      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300'
+      : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
+
+    return `
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-900 dark:text-white">
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 rounded-full ${isEnabled ? 'bg-emerald-500' : 'bg-slate-400'}"></span>
+            <span class="font-bold">${p.machine || 'All'}</span>
+          </div>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-900 dark:text-white">${p.name}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300">${p.uom || 'Piece'}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300 font-mono">${p.unitSize || '1'}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-emerald-600 dark:text-emerald-400">$${parseFloat(p.price || 0).toFixed(2)}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300 font-mono">${parseFloat(p.gst || 0).toFixed(2)}%</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300 font-mono font-semibold">$${parseFloat(p.mrp || p.price || 0).toFixed(2)}</td>
+        <td class="px-6 py-4 whitespace-nowrap">
+          <span class="px-2.5 py-1 text-xs font-semibold rounded-full ${statusBadgeClass}">
+            ${p.status || 'Enabled'}
+          </span>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+          <button onclick="triggerDelete('product', '${p.id}', '${p.name}')" class="px-3 py-1 rounded-lg text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 border border-rose-200 dark:border-rose-900/60 transition-colors">
+            Delete
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
 /* ==========================================================================
    7. Modals: Add VM Station, Customer, Product
    ========================================================================== */
@@ -673,6 +904,94 @@ function initStationModal() {
       renderDashboardStationGrid();
       updateBadges();
       showToast('✅ VM Station added successfully!', 'success');
+      form.reset();
+      closeModal();
+    });
+  }
+}
+
+function initMachineModal() {
+  const modal = document.getElementById('machine-modal');
+  const modalBackdrop = document.getElementById('machine-modal-backdrop');
+  const modalBox = document.getElementById('machine-modal-box');
+  const openBtn = document.getElementById('open-machine-modal-btn');
+  const closeBtn = document.getElementById('close-machine-modal-btn');
+  const cancelBtn = document.getElementById('cancel-machine-modal-btn');
+  const form = document.getElementById('machine-add-form');
+
+  function openModal() {
+    populateMachineStationFilter();
+    modal?.classList.remove('hidden');
+    setTimeout(() => {
+      modalBackdrop?.classList.remove('opacity-0');
+      modalBox?.classList.remove('scale-95', 'opacity-0');
+      modalBox?.classList.add('scale-100', 'opacity-100');
+    }, 10);
+  }
+
+  function closeModal() {
+    modalBackdrop?.classList.add('opacity-0');
+    modalBox?.classList.remove('scale-100', 'opacity-100');
+    modalBox?.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => { modal?.classList.add('hidden'); }, 300);
+  }
+
+  if (openBtn) openBtn.addEventListener('click', openModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        station: document.getElementById('machine-station-select')?.value || 'ASD',
+        type: document.getElementById('machine-type-select')?.value || 'Product Machine',
+        code: document.getElementById('machine-code-input')?.value?.trim(),
+        serialNumber: document.getElementById('machine-serial-input')?.value?.trim(),
+        vendor: document.getElementById('machine-vendor-input')?.value?.trim() || 'Nirmal',
+        status: document.getElementById('machine-status-select')?.value || 'Active'
+      };
+
+      if (!payload.code || !payload.serialNumber) {
+        showToast('Machine Code and Serial Number are required!', 'error');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/machines/add', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('✅ Machine added successfully!', 'success');
+          fetchMachines();
+          form.reset();
+          closeModal();
+          return;
+        }
+      } catch (err) {
+        // Fallback to local
+      }
+
+      const newMachine = {
+        id: String(Date.now()),
+        no: state.machines.length + 1,
+        station: payload.station,
+        code: payload.code,
+        serialNumber: payload.serialNumber,
+        type: payload.type,
+        status: payload.status,
+        vendor: payload.vendor
+      };
+
+      state.machines.unshift(newMachine);
+      setLocalData('machines', state.machines);
+      renderMachinesTable();
+      populateProductMachineFilter();
+      updateBadges();
+      showToast('✅ Machine added successfully!', 'success');
       form.reset();
       closeModal();
     });
@@ -886,6 +1205,7 @@ function initDeleteModal() {
       const { type, id, name } = state.deleteTarget;
       let endpoint = '';
       if (type === 'station') endpoint = `/api/stations/${id}`;
+      else if (type === 'machine') endpoint = `/api/machines/${id}`;
       else if (type === 'customer') endpoint = `/api/customers/${id}`;
       else if (type === 'product') endpoint = `/api/products/${id}`;
 
@@ -905,6 +1225,10 @@ function initDeleteModal() {
         setLocalData('stations', state.stations);
         renderStationsTable();
         renderDashboardStationGrid();
+      } else if (type === 'machine') {
+        state.machines = state.machines.filter(m => m.id !== id);
+        setLocalData('machines', state.machines);
+        renderMachinesTable();
       } else if (type === 'customer') {
         state.customers = state.customers.filter(c => c.id !== id);
         setLocalData('customers', state.customers);
@@ -914,6 +1238,7 @@ function initDeleteModal() {
         state.products = state.products.filter(p => p.id !== id);
         setLocalData('products', state.products);
         renderProductsTable();
+        renderProductsTabTable();
       }
 
       updateBadges();
@@ -1021,6 +1346,69 @@ function initTableFilters() {
       r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
     });
   });
+}
+
+function initMachineFilters() {
+  const stationFilter = document.getElementById('filter-machine-station');
+  const typeFilter = document.getElementById('filter-machine-type');
+  const statusFilter = document.getElementById('filter-machine-status');
+  const searchInput = document.getElementById('search-machine-input');
+
+  function applyFilters() {
+    const stVal = stationFilter?.value?.toLowerCase() || '';
+    const typeVal = typeFilter?.value?.toLowerCase() || '';
+    const statusVal = statusFilter?.value?.toLowerCase() || '';
+    const q = searchInput?.value?.toLowerCase() || '';
+
+    const filtered = state.machines.filter(m => {
+      const matchStation = !stVal || (m.station && m.station.toLowerCase() === stVal);
+      const matchType = !typeVal || (m.type && m.type.toLowerCase() === typeVal);
+      const matchStatus = !statusVal || (m.status && m.status.toLowerCase() === statusVal);
+      const matchSearch = !q || (
+        (m.code && m.code.toLowerCase().includes(q)) ||
+        (m.serialNumber && m.serialNumber.toLowerCase().includes(q)) ||
+        (m.station && m.station.toLowerCase().includes(q)) ||
+        (m.vendor && m.vendor.toLowerCase().includes(q))
+      );
+      return matchStation && matchType && matchStatus && matchSearch;
+    });
+
+    renderMachinesTable(filtered);
+  }
+
+  stationFilter?.addEventListener('change', applyFilters);
+  typeFilter?.addEventListener('change', applyFilters);
+  statusFilter?.addEventListener('change', applyFilters);
+  searchInput?.addEventListener('input', applyFilters);
+}
+
+function initProductTabFilters() {
+  const machineFilter = document.getElementById('filter-product-machine');
+  const statusFilter = document.getElementById('filter-product-status');
+  const searchInput = document.getElementById('search-product-input');
+
+  function applyFilters() {
+    const mVal = machineFilter?.value?.toLowerCase() || '';
+    const sVal = statusFilter?.value?.toLowerCase() || '';
+    const q = searchInput?.value?.toLowerCase() || '';
+
+    const filtered = state.products.filter(p => {
+      const matchMachine = !mVal || (p.machine && p.machine.toLowerCase() === mVal);
+      const matchStatus = !sVal || (p.status && p.status.toLowerCase() === sVal);
+      const matchSearch = !q || (
+        (p.name && p.name.toLowerCase().includes(q)) ||
+        (p.machine && p.machine.toLowerCase().includes(q)) ||
+        (p.uom && p.uom.toLowerCase().includes(q))
+      );
+      return matchMachine && matchStatus && matchSearch;
+    });
+
+    renderProductsTabTable(filtered);
+  }
+
+  machineFilter?.addEventListener('change', applyFilters);
+  statusFilter?.addEventListener('change', applyFilters);
+  searchInput?.addEventListener('input', applyFilters);
 }
 
 function initQuickActions() {

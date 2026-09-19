@@ -13,16 +13,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname));
 
 // Seed Data from Staging Portal (https://staging.nirmalinnovations.com)
+const { STAGING_STATIONS, STAGING_MACHINES, STAGING_PRODUCTS } = require('./public/js/staging-data.js');
 
-let vmStations = [
-  { id: '1', name: 'ASD', code: 'ASD', address: 'Ahmedabad Gujarat India 380001', latitude: '23.0225', longitude: '72.5714', phone: '9876543210', email: 'asd@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380001', status: 'Enabled' },
-  { id: '2', name: 'Nirmal Test', code: 'Nirmal', address: '123 street India 380001', latitude: '23.0300', longitude: '72.5800', phone: '9925069523', email: 'nirmal@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380001', status: 'Enabled' },
-  { id: '3', name: 'Zydus', code: 'ZYD', address: 'Ahmedabad Gujarat India 380001', latitude: '22.9900', longitude: '72.5100', phone: '9825069523', email: 'zydus@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380001', status: 'Enabled' },
-  { id: '4', name: 'Tea Vend 1', code: 'TV1', address: 'a-211, it slos, sg highway Ahmedabad Gujarat India 380015', latitude: '23.0400', longitude: '72.5200', phone: '8866041036', email: 'tv1@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380015', status: 'Enabled' },
-  { id: '5', name: 'Tea Vend 2', code: 'TV2', address: 'a-211, it slos, sg highway Ahmedabad Gujarat India 380015', latitude: '23.0410', longitude: '72.5210', phone: '8866041037', email: 'tv2@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380015', status: 'Enabled' },
-  { id: '6', name: 'Tea Vend 3', code: 'TV3', address: 'a-211, it slos, sg highway Ahmedabad Gujarat India 380015', latitude: '23.0420', longitude: '72.5220', phone: '8866041038', email: 'tv3@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380015', status: 'Enabled' },
-  { id: '7', name: 'Hiren1', code: 'H1', address: 'a-211, it slos, sg highway Ahmedabad Gujarat India 380015', latitude: '23.0450', longitude: '72.5250', phone: '9106897179', email: 'hiren@nirmal.com', country: 'India', state: 'Gujarat', city: 'Ahmedabad', zip: '380015', status: 'Enabled' }
-];
+let vmStations = [...STAGING_STATIONS];
+let machines = [...STAGING_MACHINES];
+let products = [...STAGING_PRODUCTS];
 
 let customers = [
   { id: '1', name: 'jobin mackwan', email: 'xyz@gmail.com', contact: '1234567890', balance: 416.00, billing: 'Pre-Paid', city: 'Ahmedabad' },
@@ -37,19 +32,6 @@ let customers = [
   { id: '10', name: 'demoqwer Mehta', email: 'asdgiuygih@gmail.com', contact: '9598714254', balance: 100.00, billing: 'Pre-Paid', city: 'Ahmedabad' }
 ];
 
-let products = [
-  { id: '1', machine: 'ASMT ASMT', name: 'Tea 500Grms', image: 'tea.jpg', uom: 'Kg', unitSize: '1', price: 1.00, gst: 1.00, mrp: 1.00, minQty: '1', status: 'Enabled' },
-  { id: '2', machine: 'CMP001 CMP001', name: 'Amul Gold', image: 'amul_gold.jpg', uom: 'Liter', unitSize: '0.500', price: 27.26, gst: 6.00, mrp: 29.00, minQty: '1', status: 'Disabled' },
-  { id: '3', machine: 'CMP001 CMP001', name: 'Amul Taza', image: 'amul_taza.jpg', uom: 'Liter', unitSize: '0.500', price: 23.50, gst: 6.00, mrp: 25.00, minQty: '1', status: 'Disabled' },
-  { id: '4', machine: 'CMP001 CMP001', name: 'Amul Shakti', image: 'amul_shakti.jpg', uom: 'Liter', unitSize: '0.500', price: 19.74, gst: 6.00, mrp: 21.00, minQty: '1', status: 'Disabled' },
-  { id: '5', machine: 'CMP001 CMP001', name: '46.Ferrero Rocher - Chocolate (24 pcs)', image: 'ferrero.jpg', uom: 'Piece', unitSize: '1', price: 737.29, gst: 18.00, mrp: 870.00, minQty: '1', status: 'Disabled' },
-  { id: '6', machine: 'ZYDVEND ZYD003', name: '31.JEERA MASALA', image: 'jeera.jpg', uom: 'Liter', unitSize: '1', price: 1.00, gst: 0.00, mrp: 1.00, minQty: '1', status: 'Enabled' },
-  { id: '7', machine: 'ZYDVEND ZYD003', name: '34.COCA COLA', image: 'cocacola.jpg', uom: 'Liter', unitSize: '1', price: 20.00, gst: 0.00, mrp: 20.00, minQty: '1', status: 'Disabled' },
-  { id: '8', machine: 'ZYDVEND ZYD003', name: '32. SPRITE', image: 'sprite.jpg', uom: 'Liter', unitSize: '1', price: 10.00, gst: 0.00, mrp: 10.00, minQty: '1', status: 'Enabled' },
-  { id: '9', machine: 'ZYDVEND ZYD003', name: '36.BISLERI', image: 'bisleri.jpg', uom: 'Liter', unitSize: '1', price: 10.00, gst: 0.00, mrp: 10.00, minQty: '1', status: 'Disabled' },
-  { id: '10', machine: 'ZYDVEND ZYD003', name: '37.PEPSI', image: 'pepsi.jpg', uom: 'Liter', unitSize: '1', price: 20.00, gst: 0.00, mrp: 20.00, minQty: '1', status: 'Disabled' }
-];
-
 // API Endpoints
 
 // Stats API
@@ -58,7 +40,7 @@ app.get('/api/stats', (req, res) => {
     success: true,
     data: {
       vmStations: vmStations.length,
-      machines: 13,
+      machines: machines.length,
       products: products.length,
       customers: 71,
       totalBalance: customers.reduce((sum, c) => sum + c.balance, 0)
@@ -101,6 +83,39 @@ app.delete('/api/stations/:id', (req, res) => {
   const id = req.params.id;
   vmStations = vmStations.filter(s => s.id !== id);
   res.json({ success: true, message: `Station #${id} deleted successfully.` });
+});
+
+// Machines API (GET, POST, DELETE)
+app.get('/api/machines', (req, res) => {
+  res.json({ success: true, data: machines });
+});
+
+app.post('/api/machines/add', (req, res) => {
+  const { name, code, serialNumber, station, type, vendor, status } = req.body;
+  if (!code || !serialNumber) {
+    return res.status(400).json({ success: false, message: 'Machine Code and Serial Number are required.' });
+  }
+
+  const newMachine = {
+    id: String(Date.now()),
+    no: machines.length + 1,
+    name: name || code,
+    station: station || 'ASD',
+    code,
+    serialNumber,
+    type: type || 'Product Machine',
+    status: status || 'Active',
+    vendor: vendor || 'Nirmal'
+  };
+
+  machines.unshift(newMachine);
+  res.json({ success: true, message: 'Machine added successfully!', data: newMachine });
+});
+
+app.delete('/api/machines/:id', (req, res) => {
+  const id = req.params.id;
+  machines = machines.filter(m => m.id !== id);
+  res.json({ success: true, message: `Machine #${id} deleted successfully.` });
 });
 
 // Customers API (GET, POST, DELETE)
