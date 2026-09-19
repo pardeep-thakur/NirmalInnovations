@@ -207,7 +207,7 @@ function initRouter() {
 }
 
 /* ==========================================================================
-   3. Sidebar & Mobile Drawer Logic
+   3. Sidebar & Mobile Drawer Logic (Instant 0ms Mobile Tap Response)
    ========================================================================== */
 function initSidebar() {
   const sidebar = document.getElementById('main-sidebar');
@@ -218,27 +218,118 @@ function initSidebar() {
   const closeDrawerBtn = document.getElementById('close-drawer-btn');
   const collapseDesktopBtn = document.getElementById('collapse-desktop-sidebar-btn');
 
-  function openMobileDrawer() {
+  let drawerCloseTimer = null;
+  let lastToggleTime = 0;
+
+  function openMobileDrawer(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if (!mobileDrawer) return;
+
+    // Cancel any pending close animation immediately
+    if (drawerCloseTimer) {
+      clearTimeout(drawerCloseTimer);
+      drawerCloseTimer = null;
+    }
+
     mobileDrawer.classList.remove('hidden');
-    setTimeout(() => {
+    // Force reflow so transition runs on first tap
+    void mobileDrawer.offsetHeight;
+
+    requestAnimationFrame(() => {
       drawerBackdrop?.classList.remove('opacity-0');
       drawerContent?.classList.remove('-translate-x-full');
-    }, 10);
+      document.body.classList.add('overflow-hidden');
+    });
   }
 
-  window.closeMobileDrawer = function() {
+  window.closeMobileDrawer = function(e) {
+    if (e && e.stopPropagation) {
+      e.stopPropagation();
+    }
     if (!mobileDrawer || mobileDrawer.classList.contains('hidden')) return;
+
+    if (drawerCloseTimer) {
+      clearTimeout(drawerCloseTimer);
+    }
+
     drawerBackdrop?.classList.add('opacity-0');
     drawerContent?.classList.add('-translate-x-full');
-    setTimeout(() => {
+    document.body.classList.remove('overflow-hidden');
+
+    drawerCloseTimer = setTimeout(() => {
       mobileDrawer.classList.add('hidden');
-    }, 300);
+      drawerCloseTimer = null;
+    }, 260);
   };
 
-  if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMobileDrawer);
-  if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeMobileDrawer);
-  if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeMobileDrawer);
+  function toggleMobileDrawer(e) {
+    const now = Date.now();
+    // Debounce to prevent ghost clicks (e.g. touchend followed by synthetic click)
+    if (now - lastToggleTime < 300) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      return;
+    }
+    lastToggleTime = now;
+
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (!mobileDrawer) return;
+
+    const isHidden = mobileDrawer.classList.contains('hidden');
+    if (isHidden || drawerCloseTimer !== null) {
+      openMobileDrawer();
+    } else {
+      window.closeMobileDrawer();
+    }
+  }
+
+  if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', toggleMobileDrawer);
+    // Instant touch response
+    hamburgerBtn.addEventListener('touchend', (e) => {
+      toggleMobileDrawer(e);
+    }, { passive: false });
+  }
+
+  if (closeDrawerBtn) {
+    closeDrawerBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.closeMobileDrawer(e);
+    });
+    closeDrawerBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      window.closeMobileDrawer(e);
+    }, { passive: false });
+  }
+
+  if (drawerBackdrop) {
+    drawerBackdrop.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.closeMobileDrawer(e);
+    });
+    drawerBackdrop.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      window.closeMobileDrawer(e);
+    }, { passive: false });
+  }
+
+  // Auto-close when tapping a navigation link inside the drawer
+  if (drawerContent) {
+    drawerContent.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (link) {
+        window.closeMobileDrawer();
+      }
+    });
+  }
 
   let isCollapsed = false;
   if (collapseDesktopBtn && sidebar) {
