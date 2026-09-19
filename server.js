@@ -8,8 +8,9 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from the 'public' directory
+// Serve static files from 'public' directory and repository root
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
 
 // Seed Data from Staging Portal (https://staging.nirmalinnovations.com)
 
@@ -192,6 +193,11 @@ app.post('/api/balance/add', (req, res) => {
 
 // Fallback to index.html for SPA routing
 app.get('*', (req, res) => {
+  const fs = require('fs');
+  const rootIndex = path.join(__dirname, 'index.html');
+  if (fs.existsSync(rootIndex)) {
+    return res.sendFile(rootIndex);
+  }
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
