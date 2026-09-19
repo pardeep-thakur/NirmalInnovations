@@ -354,37 +354,96 @@
             </button>
           </div>
 
-          <!-- Stat Cards -->
+          <!-- Stat Cards (Clickable to open respective pages) -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <div class="glass-panel rounded-2xl p-6 hover-lift">
-              <span class="text-xs font-bold tracking-wider uppercase text-slate-500">VM Stations</span>
-              <div class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2 counter-value" data-target="5">5
+            <!-- 1. VM Stations -> #machines -->
+            <a href="#machines"
+              class="glass-panel rounded-2xl p-6 hover-lift cursor-pointer block group border border-slate-200/80 dark:border-slate-800/80 hover:border-emerald-500/60 dark:hover:border-emerald-500/60 transition-all">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold tracking-wider uppercase text-slate-500 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">VM Stations</span>
+                <span class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
               </div>
-              <p class="text-xs text-emerald-600 mt-2 font-semibold">100% Operational</p>
-            </div>
-            <div class="glass-panel rounded-2xl p-6 hover-lift">
-              <span class="text-xs font-bold tracking-wider uppercase text-slate-500">Machines</span>
-              <div class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2 counter-value" data-target="13">13
+              <div id="dash-station-count" class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2 counter-value" data-target="7">7</div>
+              <p class="text-xs text-emerald-600 dark:text-emerald-400 mt-2 font-semibold flex items-center space-x-1">
+                <span>View all stations</span>
+                <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+              </p>
+            </a>
+
+            <!-- 2. Machines -> #machines -->
+            <a href="#machines"
+              class="glass-panel rounded-2xl p-6 hover-lift cursor-pointer block group border border-slate-200/80 dark:border-slate-800/80 hover:border-teal-500/60 dark:hover:border-teal-500/60 transition-all">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold tracking-wider uppercase text-slate-500 dark:text-slate-400 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">Machines</span>
+                <span class="w-8 h-8 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-teal-500 group-hover:text-white transition-all">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
               </div>
-              <p class="text-xs text-teal-600 mt-2 font-semibold">99.8% Uptime</p>
-            </div>
-            <div class="glass-panel rounded-2xl p-6 hover-lift">
-              <span class="text-xs font-bold tracking-wider uppercase text-slate-500">Products</span>
-              <div class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2 counter-value" data-target="152">
-                152</div>
-              <p class="text-xs text-sky-600 mt-2 font-semibold">High Inventory</p>
-            </div>
-            <div class="glass-panel rounded-2xl p-6 hover-lift">
-              <span class="text-xs font-bold tracking-wider uppercase text-slate-500">Customers</span>
-              <div class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2 counter-value" data-target="71">71
+              <div id="dash-machine-count" class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2 counter-value" data-target="13">13</div>
+              <p class="text-xs text-teal-600 dark:text-teal-400 mt-2 font-semibold flex items-center space-x-1">
+                <span>View machine status</span>
+                <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+              </p>
+            </a>
+
+            <!-- 3. Products -> #products -->
+            <a href="#products"
+              class="glass-panel rounded-2xl p-6 hover-lift cursor-pointer block group border border-slate-200/80 dark:border-slate-800/80 hover:border-sky-500/60 dark:hover:border-sky-500/60 transition-all">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold tracking-wider uppercase text-slate-500 dark:text-slate-400 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">Products</span>
+                <span class="w-8 h-8 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-sky-500 group-hover:text-white transition-all">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
               </div>
-              <p class="text-xs text-indigo-600 mt-2 font-semibold">+14% Growth</p>
-            </div>
+              <div id="dash-product-count" class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2 counter-value" data-target="10">10</div>
+              <p class="text-xs text-sky-600 dark:text-sky-400 mt-2 font-semibold flex items-center space-x-1">
+                <span>View product catalog</span>
+                <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+              </p>
+            </a>
+
+            <!-- 4. Customers -> #customers -->
+            <a href="#customers"
+              class="glass-panel rounded-2xl p-6 hover-lift cursor-pointer block group border border-slate-200/80 dark:border-slate-800/80 hover:border-indigo-500/60 dark:hover:border-indigo-500/60 transition-all">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold tracking-wider uppercase text-slate-500 dark:text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Customers</span>
+                <span class="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
+              <div id="dash-customer-count" class="text-3xl font-extrabold text-slate-900 dark:text-white mt-2 counter-value" data-target="10">10</div>
+              <p class="text-xs text-indigo-600 dark:text-indigo-400 mt-2 font-semibold flex items-center space-x-1">
+                <span>View customer accounts</span>
+                <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+              </p>
+            </a>
           </div>
 
           <!-- Dashboard Stations Preview Grid -->
           <div class="glass-panel rounded-2xl p-6 space-y-4">
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Active VM Stations</h3>
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Active VM Stations</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Live overview of connected vending machines</p>
+              </div>
+              <a href="#machines"
+                class="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200/60 dark:border-emerald-800/60 hover:bg-emerald-100 transition-colors">
+                <span>Manage All Machines</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
             <div id="dashboard-stations-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <!-- Rendered via JS -->
             </div>

@@ -357,6 +357,14 @@ function updateBadges() {
   if (stationBadge) stationBadge.innerText = state.stations.length;
   if (customerBadge) customerBadge.innerText = state.customers.length;
   if (productBadge) productBadge.innerText = state.products.length;
+
+  const dashStation = document.getElementById('dash-station-count');
+  const dashProduct = document.getElementById('dash-product-count');
+  const dashCustomer = document.getElementById('dash-customer-count');
+
+  if (dashStation) dashStation.innerText = state.stations.length;
+  if (dashProduct) dashProduct.innerText = state.products.length;
+  if (dashCustomer) dashCustomer.innerText = state.customers.length;
 }
 
 function populateCustomerSelect() {
@@ -414,20 +422,26 @@ function renderDashboardStationGrid() {
   container.innerHTML = state.stations.slice(0, 4).map(s => `
     <div class="p-4 rounded-xl bg-slate-50/80 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/60 flex flex-col justify-between space-y-3 hover-lift">
       <div class="flex items-start justify-between">
-        <div class="flex items-center space-x-3">
-          <div class="w-9 h-9 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs">
+        <a href="#machines" class="flex items-center space-x-3 group">
+          <div class="w-9 h-9 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs group-hover:scale-105 transition-transform">
             ${s.code}
           </div>
           <div>
-            <h4 class="text-sm font-bold text-slate-900 dark:text-white">${s.name}</h4>
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">${s.name}</h4>
             <p class="text-xs text-slate-500 dark:text-slate-400">${s.city || 'Ahmedabad'}, ${s.state || 'Gujarat'}</p>
           </div>
-        </div>
+        </a>
         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"></span>
       </div>
       <div class="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 pt-2 border-t border-slate-200/50 dark:border-slate-700/40">
         <span>Status: <strong class="text-emerald-600 dark:text-emerald-400">${s.status}</strong></span>
-        <button data-station="${s.name}" class="action-reboot-btn text-emerald-600 dark:text-emerald-400 hover:underline font-semibold">Reboot</button>
+        <div class="flex items-center space-x-3">
+          <a href="#machines" class="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold flex items-center space-x-1">
+            <span>Manage</span>
+            <span>&rarr;</span>
+          </a>
+          <button data-station="${s.name}" class="action-reboot-btn text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-medium">Reboot</button>
+        </div>
       </div>
     </div>
   `).join('');
